@@ -1,0 +1,132 @@
+CREATE DATABASE evobike;
+
+CREATE TABLE Modelos(
+id_modeloVARCHAR PRIMARY KEY,
+nombre_modelo VARCHAR(15),
+descripcion VARCHAR(64),
+foto_modelo MEDIUMBLOB
+);
+
+CREATE TABLE Colores(
+id_color VARCHAR PRIMARY KEY,
+nombre_color VARCHAR(32),
+descripcion_general VARCHAR(32));
+
+CREATE TABLE Piezas(
+id_pieza INT VARCHAR PRIMARY KEY,
+id_modelo VARCHAR, id_color VARCHAR,
+foto_pieza MEDIUMBLOB,
+descripcion_general VARCHAR(64),
+FOREIGN KEY(id_modelo) REFERENCES Modelos(id_modelo),
+FOREIGN KEY(id_color) REFERENCES Colores(id_color)
+);
+
+CREATE TABLE Area(
+id_area VARCHAR PRIMARY KEY,
+nombre_area VARCHAR(32));
+
+CREATE TABLE Personal(
+id_personal VARCHAR PRIMARY KEY,
+id_area VARCHAR,
+nombre VARCHAR(50),
+apellido VARCHAR(32),
+telefono VARCHAR(10),
+foto_personal MEDIUMBLOB,
+direccion varchar(255),
+antiguedad DATE,
+salario DECIMAL(5,2),
+FOREIGN KEY(id_area) REFERENCES Area(id_area)
+);
+
+CREATE TABLE Errores_produccion(
+id_error VARCHAR PRIMARY KEY,
+id_personal VARCHAR,
+descripcion VARCHAR(255),
+fecha DATE,
+FOREIGN KEY(id_personal) REFERENCES Personal(id_personal)
+);
+
+CREATE TABLE Lote(
+id_lote VARCHAR PRIMARY KEY,
+fecha_produccion DATE
+);
+
+CREATE TABLE Bicicleta(
+num_chasis VARCHAR PRIMARY KEY,
+id_modelo VARCHAR,
+id_color VARCHAR,
+id_lote VARCHAR,
+voltaje VARCHAR(10),
+num_motor VARCHAR,
+error_iden_produccion VARCHAR(255),
+descripcion_general VARCHAR(255));
+
+CREATE TABLE Errores_bicicleta(
+id_errorbicicleta VARCHAR PRIMARY KEY,
+id_error VARCHAR,
+num_chasis VARCHAR,
+FOREIGN KEY(id_error) REFERENCES Errores_produccion(id_error),
+FOREIGN KEY(num_chasis)REFERENCES Bicicleta(num_chasis)
+);
+
+CREATE TABLE Tipo_precio(
+id_tipoprecio VARCHAR PRIMARY KEY,
+nombre_tipo VARCHAR);
+
+CREATE TABLE Precio(
+id_precio VARCHAR PRIMARY KEY,
+id_tipoprecio VARCHAR,
+id_modelo VARCHAR,
+precio DECIMAL(5,2),
+FOREIGN KEY(id_tipoprecio) REFERENCES Tipo_precio(id_tipoprecio),
+FOREIGN KEY(id_modelo) REFERENCES Modelos(id_modelo)
+);
+
+CREATE TABLE Membresia(
+id_membresia VARCHAR PRIMARY KEY,
+id_precio VARCHAR,
+descripcion_general VARCHAR(255)
+);
+
+CREATE TABLE Clientes(
+id_cliente VARCHAR PRIMARY KEY,
+id_membresia VARCHAR,
+nombre VARCHAR(50),
+apellido VARCHAR(32),
+telefono VARCHAR(10),
+foto_persona MEDIUMBLOB,
+descripcion_general VARCHAR(255),
+FOREIGN KEY(id_membresia) REFERENCES Membresia(id_membresia)
+);
+
+CREATE TABLE Ruta(
+id_ruta VARCHAR PRIMARY KEY,
+localizacion VARCHAR(255));
+
+CREATE TABLE Sucursales(
+id_sucursal VARCHAR PRIMARY KEY,
+id_ruta VARCHAR,
+id_cliente VARCHAR,
+nombre_sucursal VARCHAR,
+foto_fachada MEDIUMBLOB,
+FOREIGN KEY(id_ruta) REFERENCES Ruta(id_ruta),
+FOREIGN KEY(id_cliente) REFERENCES Clientes(id_cliente));
+
+CREATE TABLE Envios(
+id_envio VARCHAR PRIMARY KEY,
+id_sucursal VARCHAR,
+id_personal VARCHAR,
+fecha_envio DATE,
+FOREIGN KEY(id_sucursal) REFERENCES Sucursales(id_sucursal),
+FOREIGN KEY(id_personal) REFERENCES Personal(id_personal));
+
+CREATE TABLE Envios_bicileta(
+id_enviobici VARCHAR PRIMARY KEY,
+id_envio VARCHAR,
+num_chasis VARCHAR,
+FOREIGN KEY(id_envio) REFERENCES Envios(id_envio),
+FOREIGN KEY(num_chasis) REFERENCES Bicicleta(num_chasis));
+
+
+
+
