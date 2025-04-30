@@ -79,7 +79,7 @@ CREATE TABLE Bicicleta (
     error_iden_produccion VARCHAR(255),
     descripcion_general VARCHAR(255),
     FOREIGN KEY (id_modelo) REFERENCES Modelos(id_modelo),
-    FOREIGN KEY (id_color) REFERENCES Color_Modelo(id_color),
+    FOREIGN KEY (id_color) REFERENCES Color_Modelo(id_colorM),
     FOREIGN KEY (id_lote) REFERENCES Lote(id_lote),
     FOREIGN KEY (id_tipoStock) REFERENCES Tipo_stock(id_tipoStock)
 );
