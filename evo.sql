@@ -11,14 +11,14 @@ CREATE TABLE Color_Modelo(
     id_colorM VARCHAR(64) PRIMARY KEY,
     id_modelo VARCHAR(64),
     nombre_color VARCHAR(32),
-    FOREIGN KEY(id_modelo) REFRENCES Modelos(id_modelo)
+    FOREIGN KEY(id_modelo) REFERENCES Modelos(id_modelo)
 
 CREATE TABLE Colores (
     id_color VARCHAR(64) PRIMARY KEY,
     id_modelo VARCHAR(64),
     nombre_color VARCHAR(32),
     descripcion_general VARCHAR(32),
-    FOREIGN KEY(id_modelo) REFRENCES Modelos(id_modelo)
+    FOREIGN KEY(id_modelo) REFERENCES Modelos(id_modelo)
 );
 
 CREATE TABLE Piezas (
