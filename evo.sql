@@ -7,10 +7,15 @@ CREATE TABLE Modelos (
     descripcion VARCHAR(64),
     foto_modelo MEDIUMBLOB
 );
+CREATE TABLE Color_Modelo(
+    id_colorM VARCHAR(64) PRIMARY KEY,
+    id_modelo VARCHAR(64),
+    nombre_color VARCHAR(32),
+    FOREIGN KEY(id_modelo) REFRENCES Modelos(id_modelo)
 
 CREATE TABLE Colores (
     id_color VARCHAR(64) PRIMARY KEY,
-    id_modelo VARCHAR,
+    id_modelo VARCHAR(64),
     nombre_color VARCHAR(32),
     descripcion_general VARCHAR(32),
     FOREIGN KEY(id_modelo) REFRENCES Modelos(id_modelo)
@@ -73,7 +78,7 @@ CREATE TABLE Bicicleta (
     error_iden_produccion VARCHAR(255),
     descripcion_general VARCHAR(255),
     FOREIGN KEY (id_modelo) REFERENCES Modelos(id_modelo),
-    FOREIGN KEY (id_color) REFERENCES Colores(id_color),
+    FOREIGN KEY (id_color) REFERENCES Color_Modelo(id_color),
     FOREIGN KEY (id_lote) REFERENCES Lote(id_lote),
     FOREIGN KEY (id_tipoStock) REFERENCES Tipo_stock(id_tipoStock)
 );
